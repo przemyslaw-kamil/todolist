@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane
+
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.przemyslaw_kamil.controllers.DialogController"
+        prefHeight="400.0" prefWidth="800.0">
+    <headerText>
+
+    </headerText>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label text="Short description:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="descriptionField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Details:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextArea fx:id="detailsArea" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                      wrapText="true"/>
+            <Label text="Deadline:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <DatePicker fx:id="deadlinePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <fx:define>
+                <ToggleGroup fx:id="colorProjectGroup"/>
+            </fx:define>
+            <Label text="Project: " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="9" GridPane.rowSpan="1">
+
+
+                <RadioButton userData="none" text="none " toggleGroup="$colorProjectGroup" selected="true"/>
+
+                <RadioButton prefWidth="35" userData="Red" toggleGroup="$colorProjectGroup"
+                             style=" -fx-background-color: red"/>
+
+                <Label text="Red "/>
+
+                <RadioButton prefWidth="35" style="-fx-background-color: green" userData="Green"
+                             toggleGroup="$colorProjectGroup"/>
+                <Label text="Green "/>
+
+                <RadioButton prefWidth="35" userData="Blue" style="-fx-background-color: blue"
+                             toggleGroup="$colorProjectGroup"/>
+                <Label text="Blue "/>
+                <RadioButton prefWidth="35" userData="Yellow" toggleGroup="$colorProjectGroup"
+                             style="-fx-background-color: yellow"/>
+                <Label text="Yellow "/>
+
+                <RadioButton prefWidth="35" userData="Orange" toggleGroup="$colorProjectGroup"
+                             style="-fx-background-color: orange"/>
+                <Label text="Orange "/>
+            </HBox>
+
+
+        </GridPane>
+    </content>
+
+</DialogPane>

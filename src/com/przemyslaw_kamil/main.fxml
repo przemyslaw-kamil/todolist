@@ -1,0 +1,254 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Separator?>
+<BorderPane fx:id="mainBorderPane" fx:controller="com.przemyslaw_kamil.controllers.Controller"
+            xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu text="File">
+
+                    <items>
+                        <MenuItem onAction="#newItemDialog" text="New..."/>
+                        <MenuItem onAction="#editItemDialog" text="Edit"/>
+                        <MenuItem onAction="#deleteItem" text="Delete"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="Exit" onAction="#onExit"/>
+                    </items>
+                </Menu>
+            </MenuBar>
+
+            <ToolBar prefWidth="200">
+
+                <GridPane vgap="1" hgap="8" gridLinesVisible="false" VBox.vgrow="ALWAYS"
+                          minWidth="500" prefWidth="780">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="8"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="13"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="12"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="22"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="12"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="12"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="12"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="12"/>
+                    </columnConstraints>
+                    <VBox>
+                        <Button onAction="#newItemDialog">
+                            <tooltip>
+                                <Tooltip text="Add a New Todo item"/>
+                            </tooltip>
+                            <graphic>
+                                <ImageView>
+                                    <Image url="@/toolbarButtonGraphics/general/New16.gif"/>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Separator/>
+                        <ToggleButton fx:id="listItems" text="List" onAction="#showList" selected="true">
+                            <tooltip>
+                                <Tooltip text="Show Projects"/>
+                            </tooltip>
+                        </ToggleButton>
+
+                    </VBox>
+                    <VBox GridPane.columnIndex="1" GridPane.columnSpan="2">
+                        <HBox>
+                            <ComboBox onAction="#setFilteredList" fx:id="filterComboBox" GridPane.rowIndex="1"
+                                      GridPane.columnIndex="2" GridPane.columnSpan="2">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Today"/>
+                                        <String fx:value="Week"/>
+                                        <String fx:value="Month"/>
+                                        <String fx:value="Date..."/>
+                                        <String fx:value="All"/>
+
+                                    </FXCollections>
+                                </items>
+                                <value>
+                                    <String fx:value="Filter"/>
+                                </value>
+                            </ComboBox>
+                        </HBox>
+
+                        <fx:define>
+                            <ToggleGroup fx:id="viewFilter"/>
+                        </fx:define>
+
+                        <HBox>
+                            <RadioButton onAction="#setFilteredList" toggleGroup="$viewFilter" text="List"
+                                         userData="leftView" selected="true"/>
+                            <RadioButton onAction="#setFilteredList" toggleGroup="$viewFilter" text="Projects"
+                                         userData="rightView"/>
+                            <RadioButton onAction="#setFilteredList" toggleGroup="$viewFilter" text="both"
+                                         userData="bothView"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox fx:id="dateVbox" GridPane.columnIndex="3" GridPane.columnSpan="2" visible="false">
+                        <HBox>
+                            <Label prefWidth="75" text="From"/>
+                            <DatePicker onAction="#setFilteredList" fx:id="dateFrom"/>
+                        </HBox>
+                        <HBox>
+                            <Label prefWidth="75" text="To"/>
+                            <DatePicker onAction="#setFilteredList" fx:id="dateTo"/>
+                        </HBox>
+                    </VBox>
+
+                    <fx:define>
+                        <ToggleGroup fx:id="viewSearch"/>
+                    </fx:define>
+
+                    <VBox GridPane.columnIndex="5" GridPane.columnSpan="2">
+                        <HBox>
+                            <TextField fx:id="searchField" onKeyPressed="#handleKeyPressed"/>
+                            <Button onAction="#searchItems">
+                                <tooltip>
+                                    <Tooltip text="Search "/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView>
+                                        <Image url="@/toolbarButtonGraphics/general/Zoom16.gif"/>
+                                    </ImageView>
+                                </graphic>
+
+                            </Button>
+                        </HBox>
+
+                        <HBox>
+                            <RadioButton onAction="#searchItems" toggleGroup="$viewSearch" text="List"
+                                         userData="leftView" selected="true"/>
+                            <RadioButton onAction="#searchItems" toggleGroup="$viewSearch" text="Projects"
+                                         userData="rightView"/>
+                            <RadioButton onAction="#searchItems" toggleGroup="$viewSearch" text="both"
+                                         userData="bothView"/>
+                        </HBox>
+
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="7">
+                        <CheckBox fx:id="searchCheckBox" text="in details">
+                            <tooltip>
+                                <Tooltip text="Search in details"/>
+                            </tooltip>
+                        </CheckBox>
+
+                        <Separator/>
+                        <ToggleButton fx:id="projectsButton" text="Projects" onAction="#showProjects">
+                            <tooltip>
+                                <Tooltip text="Show Projects"/>
+                            </tooltip>
+                        </ToggleButton>
+
+
+                    </VBox>
+                </GridPane>
+            </ToolBar>
+
+        </VBox>
+    </top>
+    <left>
+        <ListView fx:id="mainListView" onKeyPressed="#handleKeyPressed"/>
+    </left>
+    <center>
+        <VBox style="-fx-background-color: white">
+            <TextArea fx:id="itemDetailTextArea" VBox.vgrow="ALWAYS" wrapText="true" editable="false"/>
+
+        </VBox>
+    </center>
+
+    <right>
+        <VBox fx:id="rightVbox">
+
+            <HBox onMouseClicked="#clickRed">
+
+                <Label text="Red"/>
+            </HBox>
+
+            <ListView fx:id="redListView" VBox.vgrow="ALWAYS"  onKeyPressed="#handleKeyPressed"/>
+            <HBox onMouseClicked="#clickGreen">
+                <Label text="Green"/>
+            </HBox>
+            <ListView fx:id="greenListView"  onKeyPressed="#handleKeyPressed"/>
+            <HBox onMouseClicked="#clickBlue">
+                <Label text="Blue"/>
+            </HBox>
+            <ListView fx:id="projectsListViewBlue"  onKeyPressed="#handleKeyPressed"/>
+            <HBox onMouseClicked="#clickYellow">
+                <Label text="Yellow"/>
+            </HBox>
+            <ListView fx:id="projectsListViewYellow"  onKeyPressed="#handleKeyPressed"/>
+            <HBox onMouseClicked="#clickOrange">
+                <Label text="Orange"/>
+            </HBox>
+            <ListView fx:id="projectsListViewOrange"  onKeyPressed="#handleKeyPressed"/>
+            <HBox onMouseClicked="#clickNone">
+                <Label text="none"/>
+            </HBox>
+            <ListView fx:id="projectsListViewNone"  onKeyPressed="#handleKeyPressed"/>
+        </VBox>
+    </right>
+    <bottom>
+        <GridPane vgap="1" hgap="3" style="-fx-background-color: white">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="30" minWidth="150.0"/>
+                <ColumnConstraints hgrow="SOMETIMES"/>
+                <ColumnConstraints hgrow="ALWAYS" percentWidth="30" minWidth="150.0"/>
+            </columnConstraints>
+            <HBox>
+                <Label text="Due: " style="-fx-background-color: white;-fx-font-weight: bold">
+                    <font>
+                        <Font name="Times New Roman bold" size="20"/>
+                    </font>
+                </Label>
+                <Label fx:id="deadlineLabel" style="-fx-background-color: white;-fx-font-weight: bold">
+                    <font>
+                        <Font name="Times New Roman bold" size="20"/>
+                    </font>
+                </Label>
+            </HBox>
+            <HBox GridPane.columnIndex="2">
+                <Label GridPane.columnIndex="5" GridPane.columnSpan="2" text="Project: "
+                       style="-fx-background-color: white;-fx-font-weight: bold">
+                    <font>
+                        <Font name="Times New Roman bold" size="20"/>
+                    </font>
+                </Label>
+
+                <Label GridPane.columnIndex="6" fx:id="colorLabel">
+                    <font>
+                        <Font name="Times New Roman bold" size="20"/>
+                    </font>
+                </Label>
+            </HBox>
+
+        </GridPane>
+    </bottom>
+
+</BorderPane>
