@@ -9,8 +9,6 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 
-import static com.przemyslaw_kamil.storage_services.StorageInterface.itemList;
-
 public class Data {
 
     private static Data instance = new Data();
@@ -20,12 +18,13 @@ public class Data {
 ////  There are three ways to save data:
 ////  text file, xml file, or database sqlite
 ////
-     private static Xml data = new Xml();
-//    private static Sqlite data=new Sqlite();
-///  private static Txt data = new Txt();
+////     private static Xml data = new Xml();
+    private static Sqlite data=new Sqlite();
+////  private static Txt data = new Txt();
+    /////////////////////////////////////////////////////
 
     public ObservableList<Item> getItems() {
-        return itemList;
+        return data.getItemList();
     }
 
     public static Data getInstance() {

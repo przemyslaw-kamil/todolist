@@ -6,7 +6,7 @@ import com.przemyslaw_kamil.datamodel.entities.Item;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class Sqlite implements StorageInterface {
+public class Sqlite extends StorageService {
 
     private static final String DB_FILE = "todolist.db";
 
@@ -101,7 +101,7 @@ public class Sqlite implements StorageInterface {
 
             statement.execute();
 
-            StorageInterface.editItem(item, description, details, deadline, colorProject);
+            super.editItem(item, description, details, deadline, colorProject);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -112,7 +112,7 @@ public class Sqlite implements StorageInterface {
              PreparedStatement statement = conn.prepareStatement(DELETE_TO_DO_ITEM)) {
             statement.setLong(1, item.getId());
             statement.execute();
-            StorageInterface.deleteItem(item);
+            super.deleteItem(item);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -140,7 +140,7 @@ public class Sqlite implements StorageInterface {
 
     public void addItem(Item item) {
         if (addTDItem(item)) {
-            StorageInterface.addItem(item);
+            super.addItem(item);
         } else {
             System.out.println("Can't add item to database");
         }
@@ -158,7 +158,7 @@ public class Sqlite implements StorageInterface {
 
             statement.execute();
 
-            StorageInterface.setProject(item, color);
+            super.setProject(item, color);
         } catch (SQLException e) {
             System.out.println("Can't change project \n" + e.getMessage());
         }

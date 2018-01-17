@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
 
-public class Xml implements StorageInterface {
+public class Xml extends StorageService {
 
     private static final String DATA_FILE= "todolist.xml";
     private static final String ITEM="item";
@@ -166,18 +166,5 @@ public class Xml implements StorageInterface {
         EndElement eElement = eventFactory.createEndElement("", "", name);
         eventWriter.add(eElement);
         eventWriter.add(end);
-    }
-
-    public void  editItem (Item item, String description, String details, LocalDate deadline, ColorProject colorProject){
-        StorageInterface.editItem(item, description,details,deadline, colorProject);
-    }
-
-    public void deleteItem (Item item){
-            StorageInterface.deleteItem(item);
-    }
-    public void addItem (Item item){
-            StorageInterface.addItem(item);
-    }
-    public void setProject(Item item, String color) {StorageInterface.setProject(item, color);
     }
 }

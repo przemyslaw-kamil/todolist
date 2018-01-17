@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Iterator;
 
-public class Txt implements StorageInterface { private static String filename = "todolist.txt";
+public class Txt extends StorageService { private static String filename = "todolist.txt";
 
     public void loadItems() {
         Path path = Paths.get(filename);
@@ -59,15 +59,4 @@ public class Txt implements StorageInterface { private static String filename = 
         }
     }
 
-    public void deleteItem (Item item){
-        StorageInterface.deleteItem(item);
-    }
-    public void addItem (Item item){
-        StorageInterface.addItem(item);
-    }
-    public void  editItem (Item item, String description, String details, LocalDate deadline, ColorProject colorProject){
-        StorageInterface.editItem(item, description,details,deadline, colorProject);
-    }
-
-    public void setProject(Item item, String color) {StorageInterface.setProject(item, color); }
 }
